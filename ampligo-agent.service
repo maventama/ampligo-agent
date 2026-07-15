@@ -1,0 +1,14 @@
+[Unit]
+Description=Ampligo monitoring agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/usr/local/bin/ampligo-agent --config /etc/ampligo/agent.yml
+Restart=on-failure
+RestartSec=5
+User=nobody
+DynamicUser=yes
+
+[Install]
+WantedBy=multi-user.target
