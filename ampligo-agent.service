@@ -7,8 +7,6 @@ Wants=network-online.target
 ExecStart=/usr/local/bin/ampligo-agent --config /etc/ampligo/agent.yml
 Restart=on-failure
 RestartSec=5
-User=nobody
-DynamicUser=yes
 
 [Install]
 WantedBy=multi-user.target

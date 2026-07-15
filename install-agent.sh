@@ -68,6 +68,9 @@ chmod 600 "${CONFIG_DIR}/agent.yml"
 echo "Wrote ${CONFIG_DIR}/agent.yml"
 
 if [ "$os" = "linux" ] && command -v systemctl >/dev/null 2>&1; then
+    # Runs as root (no User=/DynamicUser=): agent.yml is chmod 600 since it can
+    # hold a DB password, and DynamicUser's per-start random UID can never be
+    # given static read access to it.
     cat > /etc/systemd/system/ampligo-agent.service <<SERVICE
 [Unit]
 Description=Ampligo monitoring agent
@@ -78,7 +81,6 @@ Wants=network-online.target
 ExecStart=${INSTALL_DIR}/${BIN_NAME} --config ${CONFIG_DIR}/agent.yml
 Restart=on-failure
 RestartSec=5
-DynamicUser=yes
 
 [Install]
 WantedBy=multi-user.target
