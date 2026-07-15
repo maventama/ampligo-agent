@@ -4,6 +4,22 @@ Small daemon that samples CPU, memory, disk, and load average on a host and
 pushes them to Ampligo's usage ingest endpoint (`POST /api/v1/ingest/usage`)
 on an interval.
 
+## Quick install (Linux/macOS)
+
+Generate an API key from the app's Settings tab in Ampligo (Agent API Keys
+section), then run the one-liner shown there, or manually:
+
+```
+curl -sSL https://ampligo.niago.id/install-agent.sh | sudo AMPLIGO_API_KEY=amp_xxx bash
+```
+
+This downloads the right binary from [GitHub Releases](https://github.com/maventama/ampligo-agent/releases),
+installs it to `/usr/local/bin`, writes `/etc/ampligo/agent.yml`, and sets it
+up as a systemd service on Linux (on macOS it just installs the binary and
+config - start it manually or via your own supervisor).
+
+The sections below cover building from source instead.
+
 ## Build
 
 ```
