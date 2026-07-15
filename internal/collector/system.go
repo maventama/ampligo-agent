@@ -13,6 +13,7 @@ import (
 
 // Snapshot matches the payload shape expected by POST /api/v1/ingest/usage.
 type Snapshot struct {
+	Hostname        string  `json:"hostname"`
 	CPUPercent      float64 `json:"cpu_percent"`
 	MemoryPercent   float64 `json:"memory_percent"`
 	MemoryUsedMB    uint64  `json:"memory_used_mb"`
@@ -30,7 +31,10 @@ type Snapshot struct {
 // NetworkInBytes/NetworkOutBytes are cumulative counters since boot, not deltas
 // since the last sample - the server is expected to derive rates from consecutive readings.
 func Collect(diskPath string) (Snapshot, error) {
-	snap := Snapshot{RecordedAt: time.Now().UTC().Format(time.RFC3339)}
+	snap := Snapshot{
+		Hostname:   hostname(),
+		RecordedAt: time.Now().UTC().Format(time.RFC3339),
+	}
 
 	cpuPercents, err := cpu.Percent(time.Second, false)
 	if err != nil {

@@ -32,7 +32,7 @@ func (c *PostgresCollector) Close() error {
 
 func (c *PostgresCollector) Collect() (DBSnapshot, error) {
 	now := time.Now().UTC()
-	snap := DBSnapshot{DBType: "postgres", RecordedAt: now.Format(time.RFC3339)}
+	snap := DBSnapshot{Hostname: hostname(), DBType: "postgres", RecordedAt: now.Format(time.RFC3339)}
 
 	var active int64
 	if err := c.db.QueryRow("SELECT count(*) FROM pg_stat_activity WHERE state = 'active'").Scan(&active); err != nil {

@@ -40,6 +40,11 @@ interval_seconds: 15
 The API key is a credential separate from your Ampligo login, scoped to
 pushing metrics for a single app. It never needs to leave this config file.
 
+The agent identifies itself to Ampligo by the machine's hostname - the first
+push from a new hostname auto-registers it as a new server under the app, so
+you can run this on multiple machines for the same app and see each one
+separately (rename them from the app's Servers page in Ampligo).
+
 ### Optional: MySQL/Postgres monitoring
 
 Add a `database` block to also push connection count, queries/sec, cache hit

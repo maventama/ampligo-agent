@@ -45,7 +45,7 @@ func (c *MySQLCollector) statusVar(name string) (int64, error) {
 
 func (c *MySQLCollector) Collect() (DBSnapshot, error) {
 	now := time.Now().UTC()
-	snap := DBSnapshot{DBType: "mysql", RecordedAt: now.Format(time.RFC3339)}
+	snap := DBSnapshot{Hostname: hostname(), DBType: "mysql", RecordedAt: now.Format(time.RFC3339)}
 
 	if connected, err := c.statusVar("Threads_connected"); err == nil {
 		snap.ConnectionsActive = connected

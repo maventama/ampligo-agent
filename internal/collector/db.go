@@ -1,7 +1,20 @@
 package collector
 
+import "os"
+
+// hostname reports the local hostname, falling back to "unknown" so a
+// transient os.Hostname() failure doesn't abort the whole collection - the
+// server treats a stable identifier as required to tell hosts apart.
+func hostname() string {
+	if h, err := os.Hostname(); err == nil {
+		return h
+	}
+	return "unknown"
+}
+
 // DBSnapshot matches the payload shape expected by POST /api/v1/ingest/db-usage.
 type DBSnapshot struct {
+	Hostname              string  `json:"hostname"`
 	DBType                string  `json:"db_type"`
 	ConnectionsActive     int64   `json:"connections_active,omitempty"`
 	ConnectionsMax        int64   `json:"connections_max,omitempty"`
