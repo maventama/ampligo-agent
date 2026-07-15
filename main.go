@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -14,10 +15,19 @@ import (
 	"github.com/niago-id/ampligo-agent/internal/pusher"
 )
 
+// version is set at build time via -ldflags "-X main.version=...".
+var version = "dev"
+
 func main() {
 	configPath := flag.String("config", "/etc/ampligo/agent.yml", "path to agent.yml")
 	diskPath := flag.String("disk-path", "/", "filesystem path to report disk usage for")
+	showVersion := flag.Bool("version", false, "print version and exit")
 	flag.Parse()
+
+	if *showVersion {
+		fmt.Println("ampligo-agent " + version)
+		return
+	}
 
 	cfg, err := config.Load(*configPath)
 	if err != nil {
@@ -32,7 +42,7 @@ func main() {
 	ticker := time.NewTicker(cfg.Interval())
 	defer ticker.Stop()
 
-	log.Printf("ampligo-agent: pushing every %s to %s", cfg.Interval(), cfg.IngestURL)
+	log.Printf("ampligo-agent %s: pushing every %s to %s", version, cfg.Interval(), cfg.IngestURL)
 	collectAndPush(p, *diskPath)
 
 	for {
