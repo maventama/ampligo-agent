@@ -3,11 +3,14 @@ module github.com/niago-id/ampligo-agent
 go 1.26.5
 
 require (
+	github.com/go-sql-driver/mysql v1.10.0
+	github.com/lib/pq v1.12.3
 	github.com/shirou/gopsutil/v3 v3.24.5
 	gopkg.in/yaml.v3 v3.0.1
 )
 
 require (
+	filippo.io/edwards25519 v1.2.0 // indirect
 	github.com/go-ole/go-ole v1.2.6 // indirect
 	github.com/lufia/plan9stats v0.0.0-20211012122336-39d0f177ccd0 // indirect
 	github.com/power-devops/perfstat v0.0.0-20210106213030-5aafc221ea8c // indirect

@@ -24,6 +24,22 @@ interval_seconds: 15
 The API key is a credential separate from your Ampligo login, scoped to
 pushing metrics for a single app. It never needs to leave this config file.
 
+### Optional: MySQL/Postgres monitoring
+
+Add a `database` block to also push connection count, queries/sec, cache hit
+ratio, and replication lag:
+
+```
+database:
+  type: mysql   # or postgres
+  dsn: "readonly:password@tcp(127.0.0.1:3306)/mydb"
+```
+
+Use a **read-only** DB user: `PROCESS` grant for MySQL, the `pg_monitor` role
+for Postgres. The DSN stays in this file - only the derived metrics get
+pushed, to `db_ingest_url` (auto-derived from `ingest_url`, e.g.
+`.../ingest/usage` -> `.../ingest/db-usage`).
+
 ## Run
 
 ```

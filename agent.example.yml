@@ -3,3 +3,11 @@
 api_key: ""
 ingest_url: "https://ampligo.niago.id/api/v1/ingest/usage"
 interval_seconds: 15
+
+# Optional: collect MySQL/Postgres usage metrics too. Use a read-only DB user
+# (MySQL: PROCESS grant; Postgres: pg_monitor role) - the dsn stays local to
+# this file and is never sent to Ampligo, only the derived metrics are.
+# database:
+#   type: mysql               # or "postgres"
+#   dsn: "readonly:password@tcp(127.0.0.1:3306)/mydb"
+#   # db_ingest_url is derived from ingest_url automatically; override only if needed
